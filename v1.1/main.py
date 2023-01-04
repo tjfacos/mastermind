@@ -5,6 +5,7 @@ from random import randint
 from modules.ui.menu import *
 from modules.ui.config import Screen_Dims, Colours
 from modules.ui.element_functions import exit_game
+from modules.ui.save import SaveLoadBox
 
 from modules.game.groups import SelectionBox, Row, KeyBlock
 
@@ -61,7 +62,7 @@ def setAnswerCode():
         
 
 def set_up():
-    global screen, active_row, activeStatusArray, rowsArray, keyBlockArray, won, lost, ANSWER_CODE, selected_colour
+    global screen, active_row, activeStatusArray, rowsArray, keyBlockArray, won, lost, ANSWER_CODE, selected_colour, save_load_block
     
     screen.fill(Colours.DARK_GREY)
 
@@ -100,7 +101,8 @@ def set_up():
         )
 
     activeStatusArray[0] = True
-    
+    save_load_block = SaveLoadBox((topleft[0] + row_width + 30 + row_height, topleft[1]))
+
     # Diagnostic Block
 
     # print(f"won: {won}")
@@ -143,18 +145,13 @@ loseBox = Lose_Box(SCREEN_DIMS, (
 logo = Image(50, 100, (topleft[0] - row_height - 30)*0.8, SCREEN_DIMS.height * 0.1, Path("mastermind-logo"))
 
 
-
 def play():
-    global activeStatusArray, SelectionBlock, rowsArray, keyBlockArray, winBox, loseBox, submit_btn, quit_button, selected_colour
+    global activeStatusArray, SelectionBlock, rowsArray, keyBlockArray, winBox, loseBox, submit_btn, quit_button, selected_colour, active_row, ANSWER_CODE
 
 
     set_up()
 
-
-    # global active_row, activeStatusArray, rowsArray, keyBlockArray, won, lost, ANSWER_CODE
-    
-
-    
+   
 
     run = True
     while run:
@@ -168,6 +165,17 @@ def play():
 
         quit_button.run(screen)
 
+        if not won and not lost:
+            loaded_values = save_load_block.run(screen, rowsArray, active_row, ANSWER_CODE)
+
+        if loaded_values:
+            #If there are loaded values, assign them, set activeStatusArray, then set values for rows, then set key pegs
+            rowsValues, active_row, ANSWER_CODE = loaded_values
+            for i in range(10):
+                rowsArray[i].setValues(rowsValues[i])
+                keyBlockArray[i].setKeyPegs(ANSWER_CODE, rowsValues[i])
+            activeStatusArray = [False] * 10
+            activeStatusArray[active_row] = True
 
         selected_colour = SelectionBlock.run(screen, selected_colour)
         
@@ -183,13 +191,31 @@ def play():
         
         if lost:
             loseBox.run(screen, set_up)
-        
+
+
+
+
+main_menu = Menu(SCREEN_DIMS)
+
+def show_menu():
+    while True:
+        for event in pygame.event.get():
+            if event.type==QUIT:
+                pygame.quit()
+                sys.exit()
+        pygame.display.update()
+
+        main_menu.run(screen)
+        if main_menu.game_started:
+            return True
+
 
 
 
 def main():
     pygame.init()
     
+    show_menu()
     play()
 
 
