@@ -1,5 +1,6 @@
 import pymongo
-from connection_uri import connection_uri as CLIENT_URI
+
+CLIENT_URI = "mongodb+srv://tjfacos:[password]@mastermind.aghfrv1.mongodb.net/?retryWrites=true&w=majority"
 
 client = pymongo.MongoClient(CLIENT_URI)
 db = client["mastermindDB"]
