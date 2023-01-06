@@ -14,6 +14,8 @@ class Colours:
     LIGHT_BLUE = (4,200,249)
     LIGHT_BROWN = (170, 105, 76)
     DARK_BROWN = (122, 60, 34)
+    LIGHT_GREEN = (140, 230, 86)
+    LIGHT_RED = (230, 85, 85)
 
     Colour_ID = {
             "light_grey": 0,

@@ -1,4 +1,6 @@
 import pygame
+from modules.ui.config import Colours
+
 
 class Image: #Image class to use in labels, menus etc.
     
@@ -97,10 +99,33 @@ class Label:
         screen.blit(self.text, self.rect)
 
 
+#Must Finish!!!
+# Figure out selection
+# Implement in menu.Global_Stats
 
+class textInput():
+    def __init__(self, x, y) -> None:
+        self.rect = pygame.Rect(x, y, 200, 80)
+        self.value = ""
+        self.active = False
 
+    def run(self, screen, selected):
+        pos = pygame.mouse.get_pos()
 
+        colour = Colours.LIGHT_GREY
 
+        if self.rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] and not self.clicked:
+                self.clicked = True
+        
+        if selected:
+            colour = Colours.LIGHT_BLUE
+
+        if not pygame.mouse.get_pressed()[0]:
+            self.clicked = False
+
+        
+        pygame.draw.rect(screen, colour, self.rect, 5, 5)
 
 
 
