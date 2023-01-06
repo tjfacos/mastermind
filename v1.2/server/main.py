@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from connection_uri import connection_uri as CLIENT_URI
 from db import *
 
 app = Flask(__name__)

@@ -1,0 +1,5 @@
+pygame
+hashlib
+flask
+requests
+pymongo
