@@ -119,7 +119,7 @@ class StatsPage():
             SCREEN_DIMS.height * 0.8
         )
         self.back_btn = Button(0, 0, 100, 50, Path("stop_btn"), self.stop)
-
+        self.set = False
 
 
     def stop(self):
@@ -132,27 +132,23 @@ class StatsPage():
         # print(user.verify())
         # print(user.getData())
 
-        self.leaderboard = self.leaderboard = LeaderBoard(
-            (
-                self.SCREEN_DIMS.width * 0.8,
-                self.SCREEN_DIMS.height/2
-            ),
-            self.SCREEN_DIMS.width * 0.4,
-            self.SCREEN_DIMS.height * 0.8,
-            User("", "").getLeaderboard()
-        )
+        if not self.set:
+            self.leaderboard = self.leaderboard = LeaderBoard(
+                (
+                    self.SCREEN_DIMS.width * 0.8,
+                    self.SCREEN_DIMS.height/2
+                ),
+                self.SCREEN_DIMS.width * 0.4,
+                self.SCREEN_DIMS.height * 0.8,
+                User("", "").getLeaderboard()
+            )
 
-        if user.username:
-            self.PersonalStats.setLabels(user.username, user.getData())
+            if user.username and not self.set:
+                self.PersonalStats.setLabels(user.username, user.getData())
+        
+        self.set = True
 
-        while self._continue:
-            for event in pygame.event.get():
-                if event.type==QUIT:
-                    print("quitting")
-                    pygame.quit()
-                    sys.exit()
-            pygame.display.update()
-
+        if self._continue:
             self.leaderboard.run(screen)
             self.back_btn.run(screen)
             if user.username:

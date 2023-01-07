@@ -96,7 +96,10 @@ def setAnswerCode():
 
 def set_up():
     global screen, active_row, activeStatusArray, rowsArray, keyBlockArray, won, lost, ANSWER_CODE, selected_colour, save_load_block, start_time
-    global winBox, loseBox
+    global winBox, loseBox, score_label
+
+    score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, "")
+
 
     start_time = int(time.time())
     screen.fill(Colours.DARK_GREY)
@@ -185,7 +188,13 @@ submit_btn = Button(topleft[0], topleft[1] + row_height*10, row_width, SCREEN_DI
 
 logo = Image(50, 100, (topleft[0] - row_height - 30)*0.8, SCREEN_DIMS.height * 0.1, Path("mastermind-logo"))
 
-stats_button = Button(0, SCREEN_DIMS.height - 150, 100, 100, Path("account"), stats_page.run)
+run_stats = False
+def run_stats_page():
+    global run_stats
+
+    run_stats = True
+
+stats_button = Button(0, SCREEN_DIMS.height - 150, 100, 100, Path("account"), run_stats_page)
 
 
 
@@ -201,7 +210,6 @@ def play():
 
     run = True
     while run:
-        stats_button.run(screen, (screen, user))
         
         for event in pygame.event.get():
             if event.type==QUIT:
@@ -247,6 +255,9 @@ def play():
         
         submit_btn.run(screen)
 
+        stats_button.run(screen)
+        if run_stats:
+            stats_page.run(screen, user)
 
 
 

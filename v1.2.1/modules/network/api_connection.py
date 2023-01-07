@@ -14,7 +14,6 @@ class API:
             return False
     
     def getUserStats(self, username, password):
-        print(password)
         
         r = requests.get(self.url + f"/user/{username}/{password}")
         if r.text == "401":
