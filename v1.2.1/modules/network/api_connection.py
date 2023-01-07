@@ -1,6 +1,6 @@
 import requests
 
-SERVER_URL = "http://localhost:5000"
+SERVER_URL = "https://mastermind-server-flask-gjr5-main-arlah6e57a-ew.a.run.app"
 
 class API:
     def __init__(self, url) -> None:
@@ -14,6 +14,8 @@ class API:
             return False
     
     def getUserStats(self, username, password):
+        print(password)
+        
         r = requests.get(self.url + f"/user/{username}/{password}")
         if r.text == "401":
             return False
@@ -34,7 +36,7 @@ class API:
         
         r = requests.get(self.url + "/leaderboard")
         response = r.json()
-        print(response)
+        # print(response)
         for key in response:
             leaderboard_array.append([response[key]["user"], int(response[key]["score"])])
         # print(leaderboard_array)
@@ -56,4 +58,4 @@ class API:
 if __name__ == "__main__":
     api = API(SERVER_URL)
     # print(api.CheckUser("daisy", "duckling"))
-    print(api.postScore("tom", "password123", 10_000))
+    print(api.postScore("daisy", "duckling", 2_000))

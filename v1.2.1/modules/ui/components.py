@@ -99,48 +99,45 @@ class Label:
         screen.blit(self.text, self.rect)
 
 
-#Must Finish!!!
-# Figure out selection
-# Implement in menu.Global_Stats
 
 class TextInput():
-    def __init__(self, x, y) -> None:
-        self.rect = pygame.Rect(x, y, 200, 80)
-        self.value = ""
+    def __init__(self, x, y, width, height, start_value) -> None:
+        self.rect = pygame.Rect(x, y, width, height)
+        self.value = start_value
         self.active = False
         
-    def run(self, screen, selected):
+    def run(self, screen):
         pos = pygame.mouse.get_pos()
 
         colour = Colours.LIGHT_GREY
 
-        if self.rect.collidepoint(pos) and pygame.mouse.get_pressed()[0]:
-            self.active = True
-        
-        if pygame.mouse.get_pressed()[0] and not self.rect.collidepoint(pos):
-            self.active = False
 
-        if self.active:
-            colour = Colours.LIGHT_BLUE
-            for event in pygame.event.get():
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.rect.collidepoint(event.pos):
+                    self.active = True
+                else:
+                    self.active = False
+            
+            if self.active:
+                colour = Colours.LIGHT_BLUE
                 if event.type == pygame.KEYDOWN:
-      
+        
                 # Check for backspace
                     if event.key == pygame.K_BACKSPACE:
         
                         # get text input from 0 to -1 i.e. end.
-                        user_text = user_text[:-1]
+                        self.value = self.value[:-1]
         
                 # Unicode standard is used for string
                 # formation
-                else:
-                    user_text += event.unicode
+                    else:
+                        self.value += event.unicode
 
-        if not pygame.mouse.get_pressed()[0]:
-            self.clicked = False
-
-        
         pygame.draw.rect(screen, colour, self.rect, 5, 5)
+        
+        return self.value
+
 
 
 

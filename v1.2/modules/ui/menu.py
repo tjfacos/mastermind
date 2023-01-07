@@ -8,6 +8,7 @@ from modules.ui.element_functions import exit_game
 
 from modules.network.api_connection import *
 from modules.network.encrypt import encrypt
+from modules.network.account import User
 
 
 import pygame
@@ -107,23 +108,49 @@ class LeaderBoard():
         for x in range(5):
             self.leaderboard[x].run(screen)
 
-class Global_Stats():
-    def __init__(self, SCREEN_DIMS): #If logged in, verify user, then get user stats. 
-        self.user = []
-        self.signed_in = False
-
-        with open("account.txt", "r+") as f:
-            self.user = f.readlines()
+class AccountBlock():
+    def __init__(self, topleft, user, targets) -> None:
+        self.topleft = topleft
         
-        self.API = API(URL)
-        if self.user:
-            self.sign_in(self.user[0], self.user[1])
+        self.sign_out_btn = Button(topleft[0], topleft[1]+300, 100, 50, Path("sign_out"), self.sign_out)
+        self.sign_in_btn = Button(topleft[0], topleft[1]+300, 100, 50, Path("sign_out"), self.sign_in)
 
+        if user.verified:
+            data = user.getData()
+            self.personal_best_label = Label(topleft[0], topleft[1]+50, f"Personal Best: {data[1]}")
+            self.average_label = Label(topleft[0], topleft[1]+150, f"Average Score: {data[0]}")
+        else:
+            self.username_input = TextInput()
+            self.password_input = TextInput()
+
+    def sign_out(self):
+        pass
+
+    def set_user(self, new_user):
+        self.user = new_user
+        if self.user.verified:
+            data = self.user.getData()
+            self.personal_best_label = Label(self.topleft[0], self.topleft[1]+50, f"Personal Best: {data[1]}")
+            self.average_label = Label(self.topleft[0], self.topleft[1]+150, f"Average Score: {data[0]}")
+
+    def run(self, screen):
+        if self.user.verified:
+            self.personal_best_label.run(screen)
+            self.average_label.run(screen)
+            self.sign_out_btn.run(screen)
+        else:
+            self.sign_in_btn.run(screen)
+            self.entered_username = self.username_input.run(screen)
+            self.entered_password = self.password_input.run(screen)
+
+
+class Global_Stats():
+    def __init__(self, SCREEN_DIMS, user): #If logged in, verify user, then get user stats. 
+        self.user = user
+                
         self.label = Label(0, 100, "Not Signed In")
         self.label_bg_colour = Colours.LIGHT_RED
 
-        self.sign_in_btn = Button(0, SCREEN_DIMS.height/2 - 50, 100, 50, Path("sign_in"), self.sign_in)
-        self.sign_out_btn = Button(0, SCREEN_DIMS.height/2, 100, 50, Path("sign_out"), self.sign_out)
         self.back_btn = Button(0, 0, 100, 50, Path("back"), self.finish)
 
         self.leaderboard = LeaderBoard(
@@ -136,26 +163,31 @@ class Global_Stats():
             self.API.getLeaderboard()
         )
 
+        self.username_target = ""
+        self.password_target = ""
+
+        self.signed_in = self.user.verified
+
+        #Account Block
+
     def finish(self):
         self._continue = True
 
     def sign_in(self, username, password):
-        if self.API.CheckUser(username, password):
-            self.label = Label(0, 100, f"Signed in as {username}")
+        self.user = User(username, password)
+        if self.user.verified:
+            self.label = Label(0, 100, f"Signed in as {self.user.username}")
             self.label_bg_colour = Colours.LIGHT_GREEN
-            self.user = (username, password)
             self.signed_in = True
-            self.user_stats = self.API.getUserStats(username, password)
+            return True
         else:
-            self.signed_in = False
-            self.label = Label(0, 100, f"Username Taken")
-            self.label_bg_colour = Colours.LIGHT_RED
-            self.user_stats
+            return False
             
     def sign_out(self):
         self.label = Label(0, 100, "Not Signed In")
         self.label_bg_colour = Colours.LIGHT_RED
-        self.user = ()
+        self.user = User("", "")
+        self.signed_in = False
     
     def run(self, screen):
         screen.fill(Colours.DARK_GREY)
