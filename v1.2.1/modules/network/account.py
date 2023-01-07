@@ -10,7 +10,8 @@ def load_user():
     
     with open("account.txt", "r") as f:
         details = f.read().split()
-    
+        if len(details) < 2:
+            return User("", "")
     return User(details[0], details[1])
 
 #encrypt passwords before sending to API class
@@ -43,7 +44,7 @@ class User:
         self.api.postScore(self.username, self.password, score)
     
     def getData(self):
-        print(f"getData {self.username} {self.password}")
+        # print(f"getData {self.username} {self.password}")
         
         return self.api.getUserStats(self.username, self.password)
 

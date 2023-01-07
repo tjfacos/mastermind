@@ -99,6 +99,8 @@ class StatsPage():
     def __init__(self, SCREEN_DIMS) -> None:
         self._continue = True
         
+        self.SCREEN_DIMS = SCREEN_DIMS
+
         self.leaderboard = LeaderBoard(
             (
                 SCREEN_DIMS.width * 0.8,
@@ -116,7 +118,7 @@ class StatsPage():
             SCREEN_DIMS.width * 0.5,
             SCREEN_DIMS.height * 0.8
         )
-        self.back_btn = Button(0, 0, 100, 50, Path("back"), self.stop)
+        self.back_btn = Button(0, 0, 100, 50, Path("stop_btn"), self.stop)
 
 
 
@@ -127,8 +129,18 @@ class StatsPage():
 
     def run(self, screen, user):
         screen.fill(Colours.DARK_GREY)
-        print(user.verify())
-        print(user.getData())
+        # print(user.verify())
+        # print(user.getData())
+
+        self.leaderboard = self.leaderboard = LeaderBoard(
+            (
+                self.SCREEN_DIMS.width * 0.8,
+                self.SCREEN_DIMS.height/2
+            ),
+            self.SCREEN_DIMS.width * 0.4,
+            self.SCREEN_DIMS.height * 0.8,
+            User("", "").getLeaderboard()
+        )
 
         if user.username:
             self.PersonalStats.setLabels(user.username, user.getData())

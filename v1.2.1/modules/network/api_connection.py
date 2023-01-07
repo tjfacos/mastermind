@@ -40,7 +40,6 @@ class API:
         for key in response:
             leaderboard_array.append([response[key]["user"], int(response[key]["score"])])
         # print(leaderboard_array)
-        leaderboard_array.reverse() #API is returning leaderboard in reverse order, and I can't be bothered to fix it
         # print(leaderboard_array)
         for i in range(len(leaderboard_array)):
             leaderboard_array[i].insert(0, i+1)
