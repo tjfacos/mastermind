@@ -1,4 +1,6 @@
 import pygame, sys, os, time
+import sign_in
+
 from pygame.locals import *
 from random import randint
 
@@ -49,7 +51,6 @@ row_height = (SCREEN_DIMS.height * 0.9) / 10
 row_width = row_height * 4
 topleft = (SCREEN_DIMS.width / 2 - row_width / 2, 0)
 
-stats_page = StatsPage(SCREEN_DIMS)
 
 score = 0
 score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, "")
@@ -94,9 +95,22 @@ def setAnswerCode():
     return code
         
 
+def run_stats_page():
+    global run_stats
+
+    run_stats = True
+
+def stop_run_stats():
+    global run_stats
+
+    run_stats = False
+
+stats_page = StatsPage(SCREEN_DIMS, stop_run_stats)
+stats_button = Button(0, SCREEN_DIMS.height - 150, 100, 100, Path("account"), run_stats_page)
+
 def set_up():
     global screen, active_row, activeStatusArray, rowsArray, keyBlockArray, won, lost, ANSWER_CODE, selected_colour, save_load_block, start_time
-    global winBox, loseBox, score_label
+    global winBox, loseBox, score_label, run_stats
 
     score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, "")
 
@@ -106,6 +120,7 @@ def set_up():
 
     active_row = 0
     
+    run_stats = False
     won = False
     lost = False
 
@@ -188,13 +203,6 @@ submit_btn = Button(topleft[0], topleft[1] + row_height*10, row_width, SCREEN_DI
 
 logo = Image(50, 100, (topleft[0] - row_height - 30)*0.8, SCREEN_DIMS.height * 0.1, Path("mastermind-logo"))
 
-run_stats = False
-def run_stats_page():
-    global run_stats
-
-    run_stats = True
-
-stats_button = Button(0, SCREEN_DIMS.height - 150, 100, 100, Path("account"), run_stats_page)
 
 
 

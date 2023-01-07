@@ -96,7 +96,7 @@ class PersonalStats:
 
 
 class StatsPage():
-    def __init__(self, SCREEN_DIMS) -> None:
+    def __init__(self, SCREEN_DIMS, quit_method) -> None:
         self._continue = True
         
         self.SCREEN_DIMS = SCREEN_DIMS
@@ -118,7 +118,7 @@ class StatsPage():
             SCREEN_DIMS.width * 0.5,
             SCREEN_DIMS.height * 0.8
         )
-        self.back_btn = Button(0, 0, 100, 50, Path("stop_btn"), self.stop)
+        self.back_btn = Button(0, 0, 100, 50, Path("stop_btn"), quit_method)
         self.set = False
 
 
