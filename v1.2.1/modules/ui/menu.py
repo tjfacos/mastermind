@@ -37,15 +37,15 @@ class Win_Box:
     
     def run(self, screen, replay_method, total_time, active_row, user):
         
-        if not self.have_posted_score and user.signed_in:
-            self.score = getScore(total_time, active_row)
-            user.postScore(self.score)
-            self.score_label = Label(
-                self.btn_topleft[0],
-                self.btn_topleft[1] + self.height * 0.2 + 50,
-                f"Score: {self.score}"
-            )
-            self.have_posted_score = True
+        # if not self.have_posted_score and user.signed_in:
+        #     self.score = getScore(total_time, active_row)
+        #     user.postScore(self.score)
+        #     self.score_label = Label(
+        #         self.btn_topleft[0],
+        #         self.btn_topleft[1] + self.height * 0.2 + 50,
+        #         f"Score: {self.score}"
+        #     )
+        #     self.have_posted_score = True
 
         pygame.draw.rect(
             screen,
@@ -57,7 +57,7 @@ class Win_Box:
 
         self.state_image.run(screen)
         self.play_again_btn.run(screen)
-        self.score_label.run(screen)
+        # self.score_label.run(screen)
 
 
 class Lose_Box(Win_Box):

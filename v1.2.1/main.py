@@ -13,7 +13,6 @@ from modules.game.groups import SelectionBox, Row, KeyBlock
 
 from modules.network.account import *
 
-score = 0
 total_time = 0
 start_time = 0
 
@@ -52,11 +51,21 @@ topleft = (SCREEN_DIMS.width / 2 - row_width / 2, 0)
 
 stats_page = StatsPage(SCREEN_DIMS)
 
+score = 0
+score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, "")
+
+def set_score():
+    global score, score_label, total_time, active_row
+    score = getScore(total_time, active_row)
+    score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, f"Score: {score}")
+
 def submit():
-    global active_row, activeStatusArray, won, lost, rowsArray, keyBlockArray, start_time, total_time
+    global active_row, activeStatusArray, won, lost, rowsArray, keyBlockArray, start_time, total_time, score
 
     total_time = int(time.time()) - start_time
     print(total_time)
+
+    set_score()
 
     row_index = active_row 
     active_row += 1
@@ -68,6 +77,9 @@ def submit():
     #Check if row at row_index is won, and set keys
         row_value = rowsArray[row_index].value()
         won = keyBlockArray[row_index].setKeyPegs(ANSWER_CODE, row_value)
+
+        if won and user.signed_in:
+            user.postScore(score)
     else:
         lost = True
 
@@ -203,18 +215,20 @@ def play():
         
         if won:
             winBox.run(screen, set_up, total_time, active_row, user)
+            score_label.run(screen)
             
         
         if lost:
             loseBox.run(screen, set_up, total_time, active_row, user)
+            score_label.run(screen)
         
         if not won and not lost:
             loaded_values = save_load_block.run(screen, rowsArray, active_row, ANSWER_CODE, total_time)
-            pygame.draw.rect(
-                screen,
-                Colours.DARK_GREY,
-                pygame.Rect(topleft[0] + row_width + 30 + row_height, topleft[1]+800, 500, SCREEN_DIMS.height-800)
-            )
+            # pygame.draw.rect(
+            #     screen,
+            #     Colours.DARK_GREY,
+            #     pygame.Rect(topleft[0] + row_width + 30 + row_height, topleft[1]+800, 500, SCREEN_DIMS.height-800)
+            # )
 
         if loaded_values:
             #If there are loaded values, assign them, set activeStatusArray, then set values for rows, then set key pegs
