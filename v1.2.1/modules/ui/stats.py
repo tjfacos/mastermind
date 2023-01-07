@@ -127,7 +127,7 @@ class StatsPage():
 
 
 
-    def run(self, screen, user):
+    def run(self, screen, user, reset):
         screen.fill(Colours.DARK_GREY)
         # print(user.verify())
         # print(user.getData())
@@ -153,6 +153,9 @@ class StatsPage():
             self.back_btn.run(screen)
             if user.username:
                 self.PersonalStats.run(screen)
+        else:
+            reset()
+        
 
 
 

@@ -107,7 +107,6 @@ def stop_run_stats():
 
     run_stats = False
 
-stats_page = StatsPage(SCREEN_DIMS, stop_run_stats)
 stats_button = Button(0, SCREEN_DIMS.height - 150, 100, 100, Path("account"), run_stats_page)
 
 def set_up():
@@ -213,6 +212,7 @@ def play():
     global activeStatusArray, SelectionBlock, rowsArray, keyBlockArray, winBox, loseBox, total_time
     global submit_btn, quit_button, stats_button, selected_colour, active_row, ANSWER_CODE, user
 
+    stats_page = StatsPage(SCREEN_DIMS, play)
 
     set_up()
 
@@ -267,7 +267,7 @@ def play():
 
         stats_button.run(screen)
         if run_stats:
-            stats_page.run(screen, user)
+            stats_page.run(screen, user, play)
 
 
 
