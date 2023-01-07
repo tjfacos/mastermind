@@ -1,5 +1,5 @@
 import pygame, sys, os, time
-import sign_in
+# import sign_in
 
 from pygame.locals import *
 from random import randint
@@ -61,7 +61,7 @@ def set_score():
     score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, f"Score: {score}")
 
 def submit():
-    global active_row, activeStatusArray, won, lost, rowsArray, keyBlockArray, start_time, total_time, score
+    global active_row, activeStatusArray, won, lost, rowsArray, keyBlockArray, start_time, total_time, score, user
 
     total_time = int(time.time()) - start_time
     print(total_time)
@@ -83,6 +83,8 @@ def submit():
             user.postScore(score)
     else:
         lost = True
+        active_row = 10
+        set_score()
 
 def setAnswerCode():
     code = []

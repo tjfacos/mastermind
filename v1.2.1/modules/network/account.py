@@ -41,6 +41,7 @@ class User:
         return self.api.getLeaderboard()
 
     def postScore(self, score):
+        print(f"Posting score {score}")
         self.api.postScore(self.username, self.password, score)
     
     def getData(self):
