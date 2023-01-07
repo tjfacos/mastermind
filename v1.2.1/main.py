@@ -139,6 +139,12 @@ def set_up():
 
     # print(activeStatusArray)
 
+    winBox = 0
+    loseBox = 0
+
+    del winBox
+    del loseBox
+
     winBox = Win_Box(SCREEN_DIMS, (
         topleft[0] + row_width + 30 + row_height,
         topleft[1]

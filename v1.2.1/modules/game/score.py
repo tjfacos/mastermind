@@ -1,5 +1,5 @@
 def getScore(time, active_row):
-    score = 10_000 - (active_row**2)*100 - ((time-1) * 0.1) ** 2
+    score = 10_000 - (active_row**2)*1_000 - ((time-1) / 60) ** 2
     
     if score < 0:
         score = 0

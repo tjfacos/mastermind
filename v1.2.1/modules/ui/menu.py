@@ -37,7 +37,7 @@ class Win_Box:
     
     def run(self, screen, replay_method, total_time, active_row, user):
         
-        if not self.have_posted_score:
+        if not self.have_posted_score and user.signed_in:
             self.score = getScore(total_time, active_row)
             user.postScore(self.score)
             self.score_label = Label(
