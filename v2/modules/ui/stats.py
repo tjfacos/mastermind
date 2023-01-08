@@ -101,15 +101,7 @@ class StatsPage():
         
         self.SCREEN_DIMS = SCREEN_DIMS
 
-        self.leaderboard = LeaderBoard(
-            (
-                SCREEN_DIMS.width * 0.8,
-                SCREEN_DIMS.height/2
-            ),
-            SCREEN_DIMS.width * 0.4,
-            SCREEN_DIMS.height * 0.8,
-            User("", "").getLeaderboard()
-        )
+        
         self.PersonalStats = PersonalStats(
             (
                 100,

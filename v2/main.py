@@ -112,7 +112,7 @@ def stop_run_stats():
 
     run_stats = False
 
-stats_button = Button(0, SCREEN_DIMS.height - 150, 100, 100, Path("account"), run_stats_page)
+stats_button = Button(50, SCREEN_DIMS.height - 150, 100, 100, Path("account"), run_stats_page)
 
 def set_up():
     global screen, active_row, activeStatusArray, rowsArray, keyBlockArray, won, lost, ANSWER_CODE, selected_colour, save_load_block, start_time
