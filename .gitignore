@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 account.txt
+save_game.txt
