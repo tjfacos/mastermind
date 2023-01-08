@@ -58,14 +58,12 @@ score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, 
 def set_score():
     global score, score_label, total_time, active_row, answer_label
     
-    ANSWER_CODE_TEXT = " ".join([list(Colours.Colour_ID.keys())[list(Colours.Colour_ID.values()).index(ANSWER_CODE[n])] for n in range(4)])
-    answer_label = Label(topleft[0] + row_width + 30 + row_height + 50, topleft[1] + 700, f"Answer was: {ANSWER_CODE_TEXT}")
 
     score = getScore(total_time, active_row)
     score_label = Label(topleft[0] + row_width + 30 + row_height+ 50, topleft[1] + 750, f"Score: {score}")
 
 def submit():
-    global active_row, activeStatusArray, won, lost, rowsArray, keyBlockArray, start_time, total_time, score, user
+    global active_row, activeStatusArray, won, lost, rowsArray, keyBlockArray, start_time, total_time, score, user, answer_label, ANSWER_CODE_TEXT
 
     set_score()
 
@@ -80,6 +78,8 @@ def submit():
         row_value = rowsArray[row_index].value()
         won = keyBlockArray[row_index].setKeyPegs(ANSWER_CODE, row_value)
 
+        if won:
+            answer_label = Label(topleft[0] + row_width + 30 + row_height + 50, topleft[1] + 700, f"Answer was: {ANSWER_CODE_TEXT}")
         if won and user.signed_in:
             user.postScore(score)
     else:
@@ -112,9 +112,10 @@ stats_button = Button(0, SCREEN_DIMS.height - 150, 100, 100, Path("account"), ru
 
 def set_up():
     global screen, active_row, activeStatusArray, rowsArray, keyBlockArray, won, lost, ANSWER_CODE, selected_colour, save_load_block, start_time
-    global winBox, loseBox, score_label, run_stats
+    global winBox, loseBox, score_label, run_stats, answer_label, ANSWER_CODE_TEXT
 
     score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, "")
+    answer_label = Label(topleft[0] + row_width + 30 + row_height + 50, topleft[1] + 700, f"")
 
 
     start_time = int(time.time())
@@ -129,6 +130,7 @@ def set_up():
     selected_colour = ""
 
     ANSWER_CODE = setAnswerCode()
+    ANSWER_CODE_TEXT = " ".join([list(Colours.Colour_ID.keys())[list(Colours.Colour_ID.values()).index(ANSWER_CODE[n])] for n in range(4)])
 
     activeStatusArray = [False] * 10
     rowsArray = []
