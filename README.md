@@ -8,4 +8,11 @@ There are 3 wworking versions
 
 The Client GUI is written in Pygame and KivyMD. 
 
-You can see the remote backend server repo (implemented using Flask and MongoDB) [here](https://github.com/tjfacos/mastermind_server_flask)
+You can see the remote backend server repo (for v2) (implemented using Flask and MongoDB) [here](https://github.com/tjfacos/mastermind_server_flask)
+
+TO START/RUN GAME (V2):
+* Use "pip install -r requirements.txt"
+* You can run sign_in.py to create, sign in or sign out of an account.
+* If your already signed in, they you can run main.py directly
+
+Written by Thomas Facos, SLBS
