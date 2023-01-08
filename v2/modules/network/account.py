@@ -1,4 +1,3 @@
-from modules.network.encrypt import encrypt
 from modules.network.api_connection import API, SERVER_URL
 
 # from api_connection import API, SERVER_URL
