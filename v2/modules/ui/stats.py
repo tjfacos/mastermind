@@ -143,7 +143,7 @@ class StatsPage():
                 User("", "").getLeaderboard()
             )
 
-            if user.username and not self.set:
+            if user.username:
                 self.PersonalStats.setLabels(user.username, user.getData())
         
         self.set = True

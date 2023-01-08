@@ -56,9 +56,13 @@ score = 0
 score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, "")
 
 def set_score():
-    global score, score_label, total_time, active_row
+    global score, score_label, total_time, active_row, answer_label
+    
+    ANSWER_CODE_TEXT = " ".join([list(Colours.Colour_ID.keys())[list(Colours.Colour_ID.values()).index(ANSWER_CODE[n])] for n in range(4)])
+    answer_label = Label(topleft[0] + row_width + 30 + row_height + 50, topleft[1] + 700, f"Answer was: {ANSWER_CODE_TEXT}")
+
     score = getScore(total_time, active_row)
-    score_label = Label(topleft[0] + row_width + 30 + row_height, topleft[1] + 700, f"Score: {score}")
+    score_label = Label(topleft[0] + row_width + 30 + row_height+ 50, topleft[1] + 750, f"Score: {score}")
 
 def submit():
     global active_row, activeStatusArray, won, lost, rowsArray, keyBlockArray, start_time, total_time, score, user
@@ -163,6 +167,7 @@ def set_up():
 
     for n in range(4):
         print(list(Colours.Colour_ID.keys())[list(Colours.Colour_ID.values()).index(ANSWER_CODE[n])], end=", ")
+        
     print()
 
     # print(activeStatusArray)
@@ -207,7 +212,7 @@ logo = Image(50, 100, (topleft[0] - row_height - 30)*0.8, SCREEN_DIMS.height * 0
 
 def play():
     global activeStatusArray, SelectionBlock, rowsArray, keyBlockArray, winBox, loseBox, total_time
-    global submit_btn, quit_button, stats_button, selected_colour, active_row, ANSWER_CODE, user, start_time
+    global submit_btn, quit_button, stats_button, selected_colour, active_row, ANSWER_CODE, user, start_time, answer_label
 
     stats_page = StatsPage(SCREEN_DIMS, play)
 
@@ -231,11 +236,12 @@ def play():
         if won:
             winBox.run(screen, set_up, total_time, active_row, user)
             score_label.run(screen)
-            
+            answer_label.run(screen)
         
         if lost:
             loseBox.run(screen, set_up, total_time, active_row, user)
             score_label.run(screen)
+            answer_label.run(screen)
         
 
         if not won and not lost:

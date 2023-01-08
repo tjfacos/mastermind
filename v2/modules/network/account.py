@@ -42,10 +42,10 @@ class User:
 
     def postScore(self, score):
         print(f"Posting score {score}")
-        self.api.postScore(self.username, self.password, score)
+        print(self.api.postScore(self.username, self.password, score))
     
     def getData(self):
-        # print(f"getData {self.username} {self.password}")
+        print(f"getData {self.username} {self.password}")
         
         return self.api.getUserStats(self.username, self.password)
 
