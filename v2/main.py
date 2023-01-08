@@ -63,9 +63,6 @@ def set_score():
 def submit():
     global active_row, activeStatusArray, won, lost, rowsArray, keyBlockArray, start_time, total_time, score, user
 
-    total_time = int(time.time()) - start_time
-    print(total_time)
-
     set_score()
 
     row_index = active_row 
@@ -210,12 +207,13 @@ logo = Image(50, 100, (topleft[0] - row_height - 30)*0.8, SCREEN_DIMS.height * 0
 
 def play():
     global activeStatusArray, SelectionBlock, rowsArray, keyBlockArray, winBox, loseBox, total_time
-    global submit_btn, quit_button, stats_button, selected_colour, active_row, ANSWER_CODE, user
+    global submit_btn, quit_button, stats_button, selected_colour, active_row, ANSWER_CODE, user, start_time
 
     stats_page = StatsPage(SCREEN_DIMS, play)
 
     set_up()
 
+    loaded_time = 0
    
 
     run = True
@@ -239,7 +237,11 @@ def play():
             loseBox.run(screen, set_up, total_time, active_row, user)
             score_label.run(screen)
         
+
         if not won and not lost:
+            total_time = time.time() - start_time + loaded_time
+            # print(total_time)
+            # print(loaded_time)
             loaded_values = save_load_block.run(screen, rowsArray, active_row, ANSWER_CODE, total_time)
             # pygame.draw.rect(
             #     screen,
@@ -249,7 +251,8 @@ def play():
 
         if loaded_values:
             #If there are loaded values, assign them, set activeStatusArray, then set values for rows, then set key pegs
-            rowsValues, active_row, ANSWER_CODE, total_time = loaded_values
+            rowsValues, active_row, ANSWER_CODE, loaded_time = loaded_values
+            start_time = time.time()
             for i in range(10):
                 rowsArray[i].setValues(rowsValues[i])
                 keyBlockArray[i].setKeyPegs(ANSWER_CODE, rowsValues[i])
