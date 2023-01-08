@@ -2,7 +2,7 @@ class Colours:
     BLACK = (0,0,0)
     WHITE = (255,255,255)
     LIGHT_GREY = (74,74,74)
-    DARK_GREY = (50,50,50)
+    DARK_GREY = (30, 30, 30)
     GREEN = (0,230,0)
     RED = (230,0,0)
     BLUE = (0,0,230)
