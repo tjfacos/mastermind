@@ -30,7 +30,10 @@ getUser()
 
 SCREEN_DIMS = Screen_Dims()
 
-screen = pygame.display.set_mode()
+if sys.platform.startswith("linux"):
+    screen = pygame.display.set_mode((1500, 800))
+else:
+    screen= pygame.display.set_mode()
 pygame.display.set_caption("Mastermind")
 screen.fill(Colours.DARK_GREY)
 
