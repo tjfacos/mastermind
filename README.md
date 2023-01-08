@@ -1,4 +1,4 @@
-# mastermind
+# Mastermind
 Repository for my Year 12 CS Mastermind Project
 
 There are 3 wworking versions
