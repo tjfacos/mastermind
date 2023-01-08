@@ -30,7 +30,7 @@ getUser()
 
 SCREEN_DIMS = Screen_Dims()
 
-screen = pygame.display.set_mode((1500, 800))
+screen = pygame.display.set_mode()
 pygame.display.set_caption("Mastermind")
 screen.fill(Colours.DARK_GREY)
 
@@ -60,7 +60,7 @@ def set_score():
     
 
     score = getScore(total_time, active_row)
-    score_label = Label(topleft[0] + row_width + 30 + row_height+ 50, topleft[1] + 750, f"Score: {score}")
+    score_label = Label(topleft[0] + row_width + 30 + row_height+ 20, topleft[1] + 750, f"Score: {score}")
 
 def submit():
     global active_row, activeStatusArray, won, lost, rowsArray, keyBlockArray, start_time, total_time, score, user, answer_label, ANSWER_CODE_TEXT
@@ -79,10 +79,11 @@ def submit():
         won = keyBlockArray[row_index].setKeyPegs(ANSWER_CODE, row_value)
 
         if won:
-            answer_label = Label(topleft[0] + row_width + 30 + row_height + 50, topleft[1] + 700, f"Answer was: {ANSWER_CODE_TEXT}")
+            answer_label = Label(topleft[0] + row_width + 30 + row_height + 20, topleft[1] + 700, f"Answer was: {ANSWER_CODE_TEXT}")
         if won and user.signed_in:
             user.postScore(score)
     else:
+        answer_label = Label(topleft[0] + row_width + 30 + row_height + 20, topleft[1] + 700, f"Answer was: {ANSWER_CODE_TEXT}")
         lost = True
         active_row = 10
         set_score()
