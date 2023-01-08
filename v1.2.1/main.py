@@ -229,7 +229,6 @@ def play():
 
         logo.run(screen)
 
-        quit_button.run(screen)
         
         if won:
             winBox.run(screen, set_up, total_time, active_row, user)
@@ -268,6 +267,9 @@ def play():
         stats_button.run(screen)
         if run_stats:
             stats_page.run(screen, user, play)
+        else:
+            quit_button.run(screen)
+
 
 
 

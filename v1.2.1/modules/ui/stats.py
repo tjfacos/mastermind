@@ -118,7 +118,7 @@ class StatsPage():
             SCREEN_DIMS.width * 0.5,
             SCREEN_DIMS.height * 0.8
         )
-        self.back_btn = Button(0, 0, 100, 50, Path("stop_btn"), quit_method)
+        self.back_btn = Button(0, 100, 100, 50, Path("back"), quit_method)
         self.set = False
 
 
